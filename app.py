@@ -26,20 +26,22 @@ class Text_Expert:
             [self.system_prompt, self.user_prompt]
         )
 
-        self.chat = ChatAnthropic(model='claude-v1-100k', max_tokens_to_sample=512, streaming=True, callbacks=[StreamlitCallbackHandler()])
+        self.chat = ChatAnthropic(model='claude-v1-100k', max_tokens_to_sample=1024, streaming=True, callbacks=[StreamlitCallbackHandler()])
 
         self.chain = LLMChain(llm=self.chat, prompt=full_prompt_template)
 
     def get_system_prompt(self):
         system_prompt = """
-        Answer the user question based on below context as best you can, but speaking as compasionate medical professional.
+        Answer the user question based on below context as best you can, and speaking as medical professor.
+        Provide as much details as possible.
         If the information can not be found in below context, please tell: "I do not know"
         
         #####Context
         {context}
         ##### end of Context
 
-        Begin! Remember to answer as a compansionate medical professional when giving your final answer, keep the answer brief .
+        Begin! Remember to answer as a medical school professor when giving your final answer.
+        Provide as much details as possible.
         """
 
         return SystemMessagePromptTemplate.from_template(system_prompt)
